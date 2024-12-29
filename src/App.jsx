@@ -6,7 +6,7 @@ function App() {
   const [html, setHTML] = useState()
   return(
     <>
-      <Tiptap html={setHTML()} />
+      <Tiptap html={setHTML} />
       <div>
         {html}
       </div>

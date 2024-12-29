@@ -1,50 +1,25 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBold,faItalic,faUnderline,faStrikethrough,faCode,faParagraph,faList,faQuoteRight,faRotateLeft } from '@fortawesome/free-solid-svg-icons'
 import "./Tiptap.scss";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Underline from '@tiptap/extension-underline'
 
 // define your extension array
-const extensions = [StarterKit];
+const extensions = [StarterKit, Underline];
 
 // const content = "<p>Hello World!</p>";
-
-function showHTML(){
-    setHTML(editor.getHTML())
-}
 
 const Tiptap = ({setHTML}) => {
   const editor = useEditor({
     extensions,
-    content: `<h2>
-  Hi there,
-</h2>
-<p>
-  this is a <em>basic</em> example of <strong>Tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-</p>
-<ul>
-  <li>
-    That’s a bullet list with one …
-  </li>
-  <li>
-    … or two list items.
-  </li>
-</ul>
-<p>
-  Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-</p>
-<pre><code class="language-css">body {
-  display: none;
-}</code></pre>
-<p>
-  I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-</p>
-<blockquote>
-  Wow, that’s amazing. Good work, boy! 👏
-  <br />
-  — Mom
-</blockquote>
-`,
+    content: ``,
     autofocus: true,
   });
+
+  function showHTML(){
+    setHTML(editor.getHTML())
+}
 
   return (
     <>
@@ -55,40 +30,41 @@ const Tiptap = ({setHTML}) => {
             disabled={!editor.can().chain().focus().toggleBold().run()}
             className={editor.isActive("bold") ? "is-active" : ""}
           >
-            Bold
+            <FontAwesomeIcon icon={faBold} />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleItalic().run()}
             disabled={!editor.can().chain().focus().toggleItalic().run()}
             className={editor.isActive("italic") ? "is-active" : ""}
           >
-            Italic
+            <FontAwesomeIcon icon={faItalic} />
+          </button>
+          <button
+            onClick={() => editor.chain().focus().toggleUnderline().run()}
+            disabled={!editor.can().chain().focus().toggleUnderline().run()}
+            className={editor.isActive('underline') ? 'is-active' : ''}
+          >
+            <FontAwesomeIcon icon={faUnderline} className="icon" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleStrike().run()}
             disabled={!editor.can().chain().focus().toggleStrike().run()}
             className={editor.isActive("strike") ? "is-active" : ""}
           >
-            Strike
+            <FontAwesomeIcon icon={faStrikethrough} />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleCode().run()}
             disabled={!editor.can().chain().focus().toggleCode().run()}
             className={editor.isActive("code") ? "is-active" : ""}
           >
-            Code
-          </button>
-          <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-            Clear marks
-          </button>
-          <button onClick={() => editor.chain().focus().clearNodes().run()}>
-            Clear nodes
+            <FontAwesomeIcon icon={faCode} />
           </button>
           <button
             onClick={() => editor.chain().focus().setParagraph().run()}
             className={editor.isActive("paragraph") ? "is-active" : ""}
           >
-            Paragraph
+            <FontAwesomeIcon icon={faParagraph} />
           </button>
           <button
             onClick={() =>
@@ -98,7 +74,7 @@ const Tiptap = ({setHTML}) => {
               editor.isActive("heading", { level: 1 }) ? "is-active" : ""
             }
           >
-            H1
+            <strong>H1</strong>
           </button>
           <button
             onClick={() =>
@@ -108,7 +84,7 @@ const Tiptap = ({setHTML}) => {
               editor.isActive("heading", { level: 2 }) ? "is-active" : ""
             }
           >
-            H2
+            <strong>H2</strong>
           </button>
           <button
             onClick={() =>
@@ -118,7 +94,7 @@ const Tiptap = ({setHTML}) => {
               editor.isActive("heading", { level: 3 }) ? "is-active" : ""
             }
           >
-            H3
+            <strong>H3</strong>
           </button>
           <button
             onClick={() =>
@@ -128,7 +104,7 @@ const Tiptap = ({setHTML}) => {
               editor.isActive("heading", { level: 4 }) ? "is-active" : ""
             }
           >
-            H4
+            <strong>H4</strong>
           </button>
           <button
             onClick={() =>
@@ -138,7 +114,7 @@ const Tiptap = ({setHTML}) => {
               editor.isActive("heading", { level: 5 }) ? "is-active" : ""
             }
           >
-            H5
+            <strong>H5</strong>
           </button>
           <button
             onClick={() =>
@@ -148,19 +124,19 @@ const Tiptap = ({setHTML}) => {
               editor.isActive("heading", { level: 6 }) ? "is-active" : ""
             }
           >
-            H6
+            <strong>H6</strong>
           </button>
           <button
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             className={editor.isActive("bulletList") ? "is-active" : ""}
           >
-            Bullet list
+            <FontAwesomeIcon icon={faList} />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
             className={editor.isActive("orderedList") ? "is-active" : ""}
           >
-            Ordered list
+            <img src="/list-ol-svgrepo-com.svg" width="16rem" alt="" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
@@ -172,29 +148,30 @@ const Tiptap = ({setHTML}) => {
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
             className={editor.isActive("blockquote") ? "is-active" : ""}
           >
-            Blockquote
+            <FontAwesomeIcon icon={faQuoteRight} />
           </button>
           <button
             onClick={() => editor.chain().focus().setHorizontalRule().run()}
           >
-            Horizontal rule
+            <img src="/horizontal-rule-svgrepo-com.svg" width="16rem" alt="" />
           </button>
           <button onClick={() => editor.chain().focus().setHardBreak().run()}>
-            Hard break
+            <img src="/format-separator-svgrepo-com.svg" width="16rem" alt="" />
           </button>
           <button
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().chain().focus().undo().run()}
           >
-            Undo
+            <FontAwesomeIcon icon={faRotateLeft} />
           </button>
           <button
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().chain().focus().redo().run()}
           >
-            Redo
+            <FontAwesomeIcon icon={faRotateLeft} flip="horizontal" />
           </button>
           <button
+            id="colorBtn`"
             onClick={() => editor.chain().focus().setColor("#958DF1").run()}
             className={
               editor.isActive("textStyle", { color: "#958DF1" })
@@ -202,12 +179,11 @@ const Tiptap = ({setHTML}) => {
                 : ""
             }
           >
-            Purple
           </button>
         </div>
       </div>
       <EditorContent className="editor" editor={editor} />
-      <button onClick={showHTML}>
+      <button id="saveBtn" onClick={showHTML}>
         Save
       </button>
     </>
