@@ -1,7 +1,12 @@
-/* Basic editor styles */
-.tiptap{
-  
+$red: #F98181;
+$green: #4fd6be;
+$purple: #bb9af7;
+
+.blockQuote{
+  border-left: 4px solid black;
+  padding-left: 1rem;
 }
+
 .button-group,.editor{
   border: 2px solid black;
   padding: 0.3rem;
@@ -9,10 +14,18 @@
 }
 .button-group{
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
   width: fit-content;
 }
 
+.nested-btn-group{
+  @extend .button-group;
+  border: 0 3px 0 3px;
+  // background-color: #d1d5db;
+}
 .editor{
   margin: 10px 0 0 0;
   :focus-visible{
@@ -26,12 +39,16 @@ button{
   justify-content: center;
   align-items: center;
   border: 2px solid gray;
-  border-radius: 0.3rem;
-  background-color: transparent;
+  border-radius: 0.4rem;
+  height: 2em;
+  img{
+    width: 18px;
+  }
 }
 
 #saveBtn{
   @extend button;
+  font-weight: bold;
   padding: 0.5rem;
   border: none;
   color: white;
@@ -39,11 +56,26 @@ button{
   margin: 0.5rem 0 0 0;
 }
 
-#colorBtn{
+.colorBtn{
   padding: 0.7rem;
-  background-color: purple;
-  border-radius: 100%;
+  border-radius: 90%;
+  &-red{
+    @extend .colorBtn;
+    background-color: $red;
+  }
+  &-green{
+    @extend .colorBtn;
+    background-color: $green;
+  }
+  &-purple{
+    @extend .colorBtn;
+    background-color: $purple;
+  }
+  .is-active{
+    border: 2px solid black;
+  }
 }
+
 .is-active{
   border: 2px solid black;
 }

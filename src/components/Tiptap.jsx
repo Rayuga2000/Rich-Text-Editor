@@ -1,25 +1,47 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBold,faItalic,faUnderline,faStrikethrough,faCode,faParagraph,faList,faQuoteRight,faRotateLeft } from '@fortawesome/free-solid-svg-icons'
+import {
+  faBold,
+  faItalic,
+  faUnderline,
+  faStrikethrough,
+  faParagraph,
+  faList,
+  faQuoteRight,
+  faRotateLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import "./Tiptap.scss";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Underline from '@tiptap/extension-underline'
+import Underline from "@tiptap/extension-underline";
+import { Color } from "@tiptap/extension-color";
+import TextStyle from "@tiptap/extension-text-style";
+import TextAlign from "@tiptap/extension-text-align";
 
 // define your extension array
-const extensions = [StarterKit, Underline];
+const extensions = [
+  StarterKit.configure({
+    blockquote:{
+      HTMLAttributes: {
+        class: 'blockQuote',
+      },
+    }
+  }),
+  Underline,
+  TextStyle,
+  Color,
+  TextAlign.configure({
+    types: ["heading", "paragraph"],
+  }),
+];
 
 // const content = "<p>Hello World!</p>";
 
-const Tiptap = ({setHTML}) => {
+const Tiptap = ({ updateHTML }) => {
   const editor = useEditor({
     extensions,
     content: ``,
     autofocus: true,
   });
-
-  function showHTML(){
-    setHTML(editor.getHTML())
-}
 
   return (
     <>
@@ -42,7 +64,7 @@ const Tiptap = ({setHTML}) => {
           <button
             onClick={() => editor.chain().focus().toggleUnderline().run()}
             disabled={!editor.can().chain().focus().toggleUnderline().run()}
-            className={editor.isActive('underline') ? 'is-active' : ''}
+            className={editor.isActive("underline") ? "is-active" : ""}
           >
             <FontAwesomeIcon icon={faUnderline} className="icon" />
           </button>
@@ -53,13 +75,9 @@ const Tiptap = ({setHTML}) => {
           >
             <FontAwesomeIcon icon={faStrikethrough} />
           </button>
-          <button
-            onClick={() => editor.chain().focus().toggleCode().run()}
-            disabled={!editor.can().chain().focus().toggleCode().run()}
-            className={editor.isActive("code") ? "is-active" : ""}
-          >
-            <FontAwesomeIcon icon={faCode} />
-          </button>
+
+          <span>|</span>
+
           <button
             onClick={() => editor.chain().focus().setParagraph().run()}
             className={editor.isActive("paragraph") ? "is-active" : ""}
@@ -126,6 +144,44 @@ const Tiptap = ({setHTML}) => {
           >
             <strong>H6</strong>
           </button>
+          <div className="nested-btn-group">
+            <button
+              onClick={() => editor.chain().focus().setTextAlign("left").run()}
+              className={
+                editor.isActive({ textAlign: "left" }) ? "is-active" : ""
+              }
+            >
+              <img src="/justify-left-svgrepo-com.svg" alt="left-justify" />
+            </button>
+            <button
+              onClick={() =>
+                editor.chain().focus().setTextAlign("center").run()
+              }
+              className={
+                editor.isActive({ textAlign: "center" }) ? "is-active" : ""
+              }
+            >
+              <img src="/justify-center-svgrepo-com.svg" alt="left-justify" />
+            </button>
+            <button
+              onClick={() => editor.chain().focus().setTextAlign("right").run()}
+              className={
+                editor.isActive({ textAlign: "right" }) ? "is-active" : ""
+              }
+            >
+              <img src="/justify-right-svgrepo-com.svg" alt="left-justify" />
+            </button>
+            <button
+              onClick={() =>
+                editor.chain().focus().setTextAlign("justify").run()
+              }
+              className={
+                editor.isActive({ textAlign: "justify" }) ? "is-active" : ""
+              }
+            >
+              <img src="/justify-fill-svgrepo-com.svg" alt="left-justify" />
+            </button>
+          </div>
           <button
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             className={editor.isActive("bulletList") ? "is-active" : ""}
@@ -138,12 +194,9 @@ const Tiptap = ({setHTML}) => {
           >
             <img src="/list-ol-svgrepo-com.svg" width="16rem" alt="" />
           </button>
-          <button
-            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-            className={editor.isActive("codeBlock") ? "is-active" : ""}
-          >
-            Code block
-          </button>
+
+          <span>|</span>
+
           <button
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
             className={editor.isActive("blockquote") ? "is-active" : ""}
@@ -171,19 +224,60 @@ const Tiptap = ({setHTML}) => {
             <FontAwesomeIcon icon={faRotateLeft} flip="horizontal" />
           </button>
           <button
-            id="colorBtn`"
-            onClick={() => editor.chain().focus().setColor("#958DF1").run()}
-            className={
-              editor.isActive("textStyle", { color: "#958DF1" })
+            onClick={() => {
+              if (!editor.isActive("textStyle", { color: "#F98181" })) {
+                editor.chain().focus().setColor("#F98181").run();
+              } else {
+                editor.chain().focus().setColor("#000000").run();
+              }
+            }}
+            className={`colorBtn-red ${
+              editor.isActive("textStyle", { color: "#F98181" })
                 ? "is-active"
                 : ""
-            }
+            }`}
+          >
+          </button>
+          <button
+            onClick={() => {
+              if (!editor.isActive("textStyle", { color: "#4fd6be" })) {
+                editor.chain().focus().setColor("#4fd6be").run();
+              } else {
+                editor.chain().focus().setColor("#000000").run();
+              }
+            }}
+            className={`colorBtn-green ${
+              editor.isActive("textStyle", { color: "#4fd6be" })
+                ? "is-active"
+                : ""
+            }`}
+          >
+          </button>
+          <button
+            onClick={() => {
+              if (!editor.isActive("textStyle", { color: "#bb9af7" })) {
+                editor.chain().focus().setColor("#bb9af7").run();
+              } else {
+                editor.chain().focus().setColor("#000000").run();
+              }
+            }}
+            className={`colorBtn-purple ${
+              editor.isActive("textStyle", { color: "#bb9af7" })
+                ? "is-active"
+                : ""
+            }`}
           >
           </button>
         </div>
       </div>
       <EditorContent className="editor" editor={editor} />
-      <button id="saveBtn" onClick={showHTML}>
+      <button
+        id="saveBtn"
+        onClick={() => {
+          const html = editor.getHTML();
+          updateHTML(html);
+        }}
+      >
         Save
       </button>
     </>
