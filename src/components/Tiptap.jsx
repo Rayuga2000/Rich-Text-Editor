@@ -44,7 +44,7 @@ const Tiptap = ({ updateHTML }) => {
   });
 
   return (
-    <>
+    <div className="Tiptap">
       <div className="control-group">
         <div className="button-group">
           <button
@@ -280,7 +280,7 @@ const Tiptap = ({ updateHTML }) => {
       >
         Save
       </button>
-    </>
+    </div>
   );
 };
 
